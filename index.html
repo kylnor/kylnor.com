@@ -5,6 +5,24 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>Kyle Northup | Helping the Exceptional Excel</title>
 
+    <!-- Google Tag Manager (loaded after consent) -->
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function loadGTM() {
+            if (window.gtmLoaded) return;
+            window.gtmLoaded = true;
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-TNZG5D6G');
+        }
+        // Check for existing consent
+        if (localStorage.getItem('cookieConsent') === 'accepted') {
+            loadGTM();
+        }
+    </script>
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"/>
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png"/>
@@ -156,6 +174,27 @@
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark font-display text-white selection:bg-primary selection:text-white">
+
+<!-- Google Tag Manager (noscript) - loads after consent given -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TNZG5D6G"
+height="0" width="0" style="display:none;visibility:hidden" id="gtm-noscript"></iframe></noscript>
+
+<!-- Cookie Consent Banner -->
+<div id="cookieBanner" class="fixed bottom-0 left-0 right-0 z-[200] bg-charcoal border-t border-white/10 p-4 md:p-6 transform translate-y-full transition-transform duration-300">
+    <div class="max-w-[1200px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+        <p class="text-sm text-gray-400 text-center md:text-left">
+            We use cookies to analyze site traffic and improve your experience. By clicking "Accept", you consent to our use of cookies.
+        </p>
+        <div class="flex gap-3">
+            <button onclick="declineCookies()" class="px-5 py-2 text-sm font-medium text-gray-400 hover:text-white border border-white/10 rounded-lg transition-colors">
+                Decline
+            </button>
+            <button onclick="acceptCookies()" class="px-5 py-2 text-sm font-bold text-white bg-primary hover:bg-red-700 rounded-lg transition-colors">
+                Accept
+            </button>
+        </div>
+    </div>
+</div>
 
 <!-- Top Navigation Bar -->
 <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5">
@@ -798,6 +837,36 @@ END:VCARD`;
             }, 300);
         }, 1500);
     });
+
+    // Cookie Consent Management
+    const cookieBanner = document.getElementById('cookieBanner');
+
+    function showCookieBanner() {
+        cookieBanner.classList.remove('translate-y-full');
+        cookieBanner.classList.add('translate-y-0');
+    }
+
+    function hideCookieBanner() {
+        cookieBanner.classList.add('translate-y-full');
+        cookieBanner.classList.remove('translate-y-0');
+    }
+
+    function acceptCookies() {
+        localStorage.setItem('cookieConsent', 'accepted');
+        hideCookieBanner();
+        loadGTM();
+        dataLayer.push({'event': 'cookie_consent_given'});
+    }
+
+    function declineCookies() {
+        localStorage.setItem('cookieConsent', 'declined');
+        hideCookieBanner();
+    }
+
+    // Show banner if no consent decision made
+    if (!localStorage.getItem('cookieConsent')) {
+        setTimeout(showCookieBanner, 1000);
+    }
 </script>
 
 </body>
